@@ -7,3 +7,5 @@ SurveyForm is configurable and it will help Admin to create questions,options on
 
 Users have to login to this system to communicate thier feedback or reviews. 
 If the user not registered, then user can create account by clickinig "SignUp".
+
+Once user logged into this product, they can select product or service to be surveyed and submit the form.
