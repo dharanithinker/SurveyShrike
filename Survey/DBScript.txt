@@ -1,0 +1,8 @@
+INSERT INTO AspNetRoles
+SELECT 1,'Admin'
+UNION
+SELECT 2,'User'
+
+
+INSERT INTO AspNetUserRoles
+SELECT '49d8ebc5-b1d7-4bb2-a2cb-3b2af98d87e7',2

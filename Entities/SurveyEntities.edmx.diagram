@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b3608a2edd84dc69828a43d982dd7aa" Name="Diagram1" >
+        <EntityTypeShape EntityType="SurveyShrikeModel.OptionDetail" Width="1.5" PointX="7.5" PointY="11" />
+        <EntityTypeShape EntityType="SurveyShrikeModel.Option" Width="1.5" PointX="5.25" PointY="7.625" />
+        <EntityTypeShape EntityType="SurveyShrikeModel.Question" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="SurveyShrikeModel.QuestionType" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="SurveyShrikeModel.Survey" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="SurveyShrikeModel.SurveyQuestionMapping" Width="1.5" PointX="5.25" PointY="4.125" />
+        <EntityTypeShape EntityType="SurveyShrikeModel.UserSurveyDetail" Width="1.5" PointX="7.5" PointY="6.125" />
+        <EntityTypeShape EntityType="SurveyShrikeModel.UserSurvey" Width="1.5" PointX="5.25" PointY="11.25" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__OptionDet__Optio__37703C52" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__Options__Questio__339FAB6E" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__UserSurve__Syste__4D5F7D71" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__Questions__TypeI__2EDAF651" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__SurveyQue__Quest__44CA3770" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__UserSurve__Quest__4C6B5938" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__SurveyQue__Surve__43D61337" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__UserSurve__Surve__47A6A41B" />
+        <AssociationConnector Association="SurveyShrikeModel.FK__UserSurve__UserS__4B7734FF" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

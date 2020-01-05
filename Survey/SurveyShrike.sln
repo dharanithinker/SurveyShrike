@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyShrike.Web", "SurveyShrike.Web.csproj", "{DA60A19E-0E17-4AD5-8C6B-66927E2021E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyShrike.Entities", "..\Entities\SurveyShrike.Entities.csproj", "{7C8E3D84-9C10-4BE2-933C-00853F323C88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyShrike.Contracts", "..\Contracts\SurveyShrike.Contracts.csproj", "{612EB048-D6CB-471E-B66D-9CAE7CDE02E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyShrike.Services", "..\Services\SurveyShrike.Services.csproj", "{D3F8CE5C-950E-4E50-A02A-239A7888E588}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyShrike.Models", "..\Models\SurveyShrike.Models.csproj", "{54788616-D07C-4F33-9F25-06A0D50AB35C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA60A19E-0E17-4AD5-8C6B-66927E2021E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA60A19E-0E17-4AD5-8C6B-66927E2021E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA60A19E-0E17-4AD5-8C6B-66927E2021E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA60A19E-0E17-4AD5-8C6B-66927E2021E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C8E3D84-9C10-4BE2-933C-00853F323C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C8E3D84-9C10-4BE2-933C-00853F323C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C8E3D84-9C10-4BE2-933C-00853F323C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C8E3D84-9C10-4BE2-933C-00853F323C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612EB048-D6CB-471E-B66D-9CAE7CDE02E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612EB048-D6CB-471E-B66D-9CAE7CDE02E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612EB048-D6CB-471E-B66D-9CAE7CDE02E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612EB048-D6CB-471E-B66D-9CAE7CDE02E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3F8CE5C-950E-4E50-A02A-239A7888E588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3F8CE5C-950E-4E50-A02A-239A7888E588}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3F8CE5C-950E-4E50-A02A-239A7888E588}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3F8CE5C-950E-4E50-A02A-239A7888E588}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54788616-D07C-4F33-9F25-06A0D50AB35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54788616-D07C-4F33-9F25-06A0D50AB35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54788616-D07C-4F33-9F25-06A0D50AB35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54788616-D07C-4F33-9F25-06A0D50AB35C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {379DD36D-C3C2-47F2-83FC-7EAE3B72DCDB}
+	EndGlobalSection
+EndGlobal

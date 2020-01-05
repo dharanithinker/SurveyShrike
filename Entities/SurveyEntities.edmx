@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SurveyShrikeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="OptionDetails">
+          <Key>
+            <PropertyRef Name="OptionDetailsId" />
+          </Key>
+          <Property Name="OptionDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OptionId" Type="int" />
+          <Property Name="PlaceHolder" Type="varchar" MaxLength="100" />
+          <Property Name="MinLength" Type="int" />
+          <Property Name="MaxLength" Type="int" />
+          <Property Name="RegexPattern" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Options">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionId" Type="int" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="IsMandatory" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="QuestionTypes">
+          <Key>
+            <PropertyRef Name="QuestionTypeId" />
+          </Key>
+          <Property Name="QuestionTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="SurveyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="SurveyQuestionMapping">
+          <Key>
+            <PropertyRef Name="SurveyQuestionMappingId" />
+          </Key>
+          <Property Name="SurveyQuestionMappingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="int" />
+          <Property Name="QuestionId" Type="int" />
+        </EntityType>
+        <EntityType Name="UserSurveyDetails">
+          <Key>
+            <PropertyRef Name="UserSurveyDetailsId" />
+          </Key>
+          <Property Name="UserSurveyDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserSurveyId" Type="int" />
+          <Property Name="QuestionId" Type="int" />
+          <Property Name="SystemValue" Type="int" />
+          <Property Name="CustomValue" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="UserSurveys">
+          <Key>
+            <PropertyRef Name="UserSurveyId" />
+          </Key>
+          <Property Name="UserSurveyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="int" />
+          <Property Name="SubmittedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="SubmittedOn" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__OptionDet__Optio__37703C52">
+          <End Role="Options" Type="Self.Options" Multiplicity="0..1" />
+          <End Role="OptionDetails" Type="Self.OptionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Options">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="OptionDetails">
+              <PropertyRef Name="OptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Options__Questio__339FAB6E">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="0..1" />
+          <End Role="Options" Type="Self.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__TypeI__2EDAF651">
+          <End Role="QuestionTypes" Type="Self.QuestionTypes" Multiplicity="0..1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionTypes">
+              <PropertyRef Name="QuestionTypeId" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyQue__Quest__44CA3770">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="0..1" />
+          <End Role="SurveyQuestionMapping" Type="Self.SurveyQuestionMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="SurveyQuestionMapping">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyQue__Surve__43D61337">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
+          <End Role="SurveyQuestionMapping" Type="Self.SurveyQuestionMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyQuestionMapping">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__Quest__4C6B5938">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="0..1" />
+          <End Role="UserSurveyDetails" Type="Self.UserSurveyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="UserSurveyDetails">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__Surve__47A6A41B">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
+          <End Role="UserSurveys" Type="Self.UserSurveys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="UserSurveys">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__Syste__4D5F7D71">
+          <End Role="Options" Type="Self.Options" Multiplicity="0..1" />
+          <End Role="UserSurveyDetails" Type="Self.UserSurveyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Options">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="UserSurveyDetails">
+              <PropertyRef Name="SystemValue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__UserS__4B7734FF">
+          <End Role="UserSurveys" Type="Self.UserSurveys" Multiplicity="0..1" />
+          <End Role="UserSurveyDetails" Type="Self.UserSurveyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSurveys">
+              <PropertyRef Name="UserSurveyId" />
+            </Principal>
+            <Dependent Role="UserSurveyDetails">
+              <PropertyRef Name="UserSurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurveyShrikeModelStoreContainer">
+          <EntitySet Name="OptionDetails" EntityType="Self.OptionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Options" EntityType="Self.Options" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionTypes" EntityType="Self.QuestionTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyQuestionMapping" EntityType="Self.SurveyQuestionMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSurveyDetails" EntityType="Self.UserSurveyDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSurveys" EntityType="Self.UserSurveys" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__OptionDet__Optio__37703C52" Association="Self.FK__OptionDet__Optio__37703C52">
+            <End Role="Options" EntitySet="Options" />
+            <End Role="OptionDetails" EntitySet="OptionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Options__Questio__339FAB6E" Association="Self.FK__Options__Questio__339FAB6E">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__TypeI__2EDAF651" Association="Self.FK__Questions__TypeI__2EDAF651">
+            <End Role="QuestionTypes" EntitySet="QuestionTypes" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyQue__Quest__44CA3770" Association="Self.FK__SurveyQue__Quest__44CA3770">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="SurveyQuestionMapping" EntitySet="SurveyQuestionMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyQue__Surve__43D61337" Association="Self.FK__SurveyQue__Surve__43D61337">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="SurveyQuestionMapping" EntitySet="SurveyQuestionMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__Quest__4C6B5938" Association="Self.FK__UserSurve__Quest__4C6B5938">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="UserSurveyDetails" EntitySet="UserSurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__Surve__47A6A41B" Association="Self.FK__UserSurve__Surve__47A6A41B">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="UserSurveys" EntitySet="UserSurveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__Syste__4D5F7D71" Association="Self.FK__UserSurve__Syste__4D5F7D71">
+            <End Role="Options" EntitySet="Options" />
+            <End Role="UserSurveyDetails" EntitySet="UserSurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__UserS__4B7734FF" Association="Self.FK__UserSurve__UserS__4B7734FF">
+            <End Role="UserSurveys" EntitySet="UserSurveys" />
+            <End Role="UserSurveyDetails" EntitySet="UserSurveyDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SurveyShrikeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SurveyShrikeEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="OptionDetails" EntityType="SurveyShrikeModel.OptionDetail" />
+          <EntitySet Name="Options" EntityType="SurveyShrikeModel.Option" />
+          <EntitySet Name="Questions" EntityType="SurveyShrikeModel.Question" />
+          <EntitySet Name="QuestionTypes" EntityType="SurveyShrikeModel.QuestionType" />
+          <EntitySet Name="Surveys" EntityType="SurveyShrikeModel.Survey" />
+          <EntitySet Name="SurveyQuestionMappings" EntityType="SurveyShrikeModel.SurveyQuestionMapping" />
+          <EntitySet Name="UserSurveyDetails" EntityType="SurveyShrikeModel.UserSurveyDetail" />
+          <EntitySet Name="UserSurveys" EntityType="SurveyShrikeModel.UserSurvey" />
+          <AssociationSet Name="FK__OptionDet__Optio__37703C52" Association="SurveyShrikeModel.FK__OptionDet__Optio__37703C52">
+            <End Role="Option" EntitySet="Options" />
+            <End Role="OptionDetail" EntitySet="OptionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Options__Questio__339FAB6E" Association="SurveyShrikeModel.FK__Options__Questio__339FAB6E">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Option" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__Syste__4D5F7D71" Association="SurveyShrikeModel.FK__UserSurve__Syste__4D5F7D71">
+            <End Role="Option" EntitySet="Options" />
+            <End Role="UserSurveyDetail" EntitySet="UserSurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Questions__TypeI__2EDAF651" Association="SurveyShrikeModel.FK__Questions__TypeI__2EDAF651">
+            <End Role="QuestionType" EntitySet="QuestionTypes" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyQue__Quest__44CA3770" Association="SurveyShrikeModel.FK__SurveyQue__Quest__44CA3770">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="SurveyQuestionMapping" EntitySet="SurveyQuestionMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__Quest__4C6B5938" Association="SurveyShrikeModel.FK__UserSurve__Quest__4C6B5938">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="UserSurveyDetail" EntitySet="UserSurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyQue__Surve__43D61337" Association="SurveyShrikeModel.FK__SurveyQue__Surve__43D61337">
+            <End Role="Survey" EntitySet="Surveys" />
+            <End Role="SurveyQuestionMapping" EntitySet="SurveyQuestionMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__Surve__47A6A41B" Association="SurveyShrikeModel.FK__UserSurve__Surve__47A6A41B">
+            <End Role="Survey" EntitySet="Surveys" />
+            <End Role="UserSurvey" EntitySet="UserSurveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserSurve__UserS__4B7734FF" Association="SurveyShrikeModel.FK__UserSurve__UserS__4B7734FF">
+            <End Role="UserSurvey" EntitySet="UserSurveys" />
+            <End Role="UserSurveyDetail" EntitySet="UserSurveyDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="OptionDetail">
+          <Key>
+            <PropertyRef Name="OptionDetailsId" />
+          </Key>
+          <Property Name="OptionDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OptionId" Type="Int32" />
+          <Property Name="PlaceHolder" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MinLength" Type="Int32" />
+          <Property Name="MaxLength" Type="Int32" />
+          <Property Name="RegexPattern" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Option" Relationship="SurveyShrikeModel.FK__OptionDet__Optio__37703C52" FromRole="OptionDetail" ToRole="Option" />
+        </EntityType>
+        <EntityType Name="Option">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="OptionDetails" Relationship="SurveyShrikeModel.FK__OptionDet__Optio__37703C52" FromRole="Option" ToRole="OptionDetail" />
+          <NavigationProperty Name="Question" Relationship="SurveyShrikeModel.FK__Options__Questio__339FAB6E" FromRole="Option" ToRole="Question" />
+          <NavigationProperty Name="UserSurveyDetails" Relationship="SurveyShrikeModel.FK__UserSurve__Syste__4D5F7D71" FromRole="Option" ToRole="UserSurveyDetail" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QuestionId" />
+          </Key>
+          <Property Name="QuestionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TypeID" Type="Int32" />
+          <Property Name="IsMandatory" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Options" Relationship="SurveyShrikeModel.FK__Options__Questio__339FAB6E" FromRole="Question" ToRole="Option" />
+          <NavigationProperty Name="QuestionType" Relationship="SurveyShrikeModel.FK__Questions__TypeI__2EDAF651" FromRole="Question" ToRole="QuestionType" />
+          <NavigationProperty Name="SurveyQuestionMappings" Relationship="SurveyShrikeModel.FK__SurveyQue__Quest__44CA3770" FromRole="Question" ToRole="SurveyQuestionMapping" />
+          <NavigationProperty Name="UserSurveyDetails" Relationship="SurveyShrikeModel.FK__UserSurve__Quest__4C6B5938" FromRole="Question" ToRole="UserSurveyDetail" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="QuestionTypeId" />
+          </Key>
+          <Property Name="QuestionTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Questions" Relationship="SurveyShrikeModel.FK__Questions__TypeI__2EDAF651" FromRole="QuestionType" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="SurveyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="SurveyQuestionMappings" Relationship="SurveyShrikeModel.FK__SurveyQue__Surve__43D61337" FromRole="Survey" ToRole="SurveyQuestionMapping" />
+          <NavigationProperty Name="UserSurveys" Relationship="SurveyShrikeModel.FK__UserSurve__Surve__47A6A41B" FromRole="Survey" ToRole="UserSurvey" />
+        </EntityType>
+        <EntityType Name="SurveyQuestionMapping">
+          <Key>
+            <PropertyRef Name="SurveyQuestionMappingId" />
+          </Key>
+          <Property Name="SurveyQuestionMappingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Int32" />
+          <Property Name="QuestionId" Type="Int32" />
+          <NavigationProperty Name="Question" Relationship="SurveyShrikeModel.FK__SurveyQue__Quest__44CA3770" FromRole="SurveyQuestionMapping" ToRole="Question" />
+          <NavigationProperty Name="Survey" Relationship="SurveyShrikeModel.FK__SurveyQue__Surve__43D61337" FromRole="SurveyQuestionMapping" ToRole="Survey" />
+        </EntityType>
+        <EntityType Name="UserSurveyDetail">
+          <Key>
+            <PropertyRef Name="UserSurveyDetailsId" />
+          </Key>
+          <Property Name="UserSurveyDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserSurveyId" Type="Int32" />
+          <Property Name="QuestionId" Type="Int32" />
+          <Property Name="SystemValue" Type="Int32" />
+          <Property Name="CustomValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Option" Relationship="SurveyShrikeModel.FK__UserSurve__Syste__4D5F7D71" FromRole="UserSurveyDetail" ToRole="Option" />
+          <NavigationProperty Name="Question" Relationship="SurveyShrikeModel.FK__UserSurve__Quest__4C6B5938" FromRole="UserSurveyDetail" ToRole="Question" />
+          <NavigationProperty Name="UserSurvey" Relationship="SurveyShrikeModel.FK__UserSurve__UserS__4B7734FF" FromRole="UserSurveyDetail" ToRole="UserSurvey" />
+        </EntityType>
+        <EntityType Name="UserSurvey">
+          <Key>
+            <PropertyRef Name="UserSurveyId" />
+          </Key>
+          <Property Name="UserSurveyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Int32" />
+          <Property Name="SubmittedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SubmittedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Survey" Relationship="SurveyShrikeModel.FK__UserSurve__Surve__47A6A41B" FromRole="UserSurvey" ToRole="Survey" />
+          <NavigationProperty Name="UserSurveyDetails" Relationship="SurveyShrikeModel.FK__UserSurve__UserS__4B7734FF" FromRole="UserSurvey" ToRole="UserSurveyDetail" />
+        </EntityType>
+        <Association Name="FK__OptionDet__Optio__37703C52">
+          <End Type="SurveyShrikeModel.Option" Role="Option" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.OptionDetail" Role="OptionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Option">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="OptionDetail">
+              <PropertyRef Name="OptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Options__Questio__339FAB6E">
+          <End Type="SurveyShrikeModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.Option" Role="Option" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="Option">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__Syste__4D5F7D71">
+          <End Type="SurveyShrikeModel.Option" Role="Option" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.UserSurveyDetail" Role="UserSurveyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Option">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="UserSurveyDetail">
+              <PropertyRef Name="SystemValue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Questions__TypeI__2EDAF651">
+          <End Type="SurveyShrikeModel.QuestionType" Role="QuestionType" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="QuestionTypeId" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyQue__Quest__44CA3770">
+          <End Type="SurveyShrikeModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.SurveyQuestionMapping" Role="SurveyQuestionMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="SurveyQuestionMapping">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__Quest__4C6B5938">
+          <End Type="SurveyShrikeModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.UserSurveyDetail" Role="UserSurveyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionId" />
+            </Principal>
+            <Dependent Role="UserSurveyDetail">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyQue__Surve__43D61337">
+          <End Type="SurveyShrikeModel.Survey" Role="Survey" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.SurveyQuestionMapping" Role="SurveyQuestionMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyQuestionMapping">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__Surve__47A6A41B">
+          <End Type="SurveyShrikeModel.Survey" Role="Survey" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.UserSurvey" Role="UserSurvey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="UserSurvey">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserSurve__UserS__4B7734FF">
+          <End Type="SurveyShrikeModel.UserSurvey" Role="UserSurvey" Multiplicity="0..1" />
+          <End Type="SurveyShrikeModel.UserSurveyDetail" Role="UserSurveyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserSurvey">
+              <PropertyRef Name="UserSurveyId" />
+            </Principal>
+            <Dependent Role="UserSurveyDetail">
+              <PropertyRef Name="UserSurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SurveyShrikeModelStoreContainer" CdmEntityContainer="SurveyShrikeEntities" >
+          <EntitySetMapping Name="OptionDetails">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.OptionDetail">
+              <MappingFragment StoreEntitySet="OptionDetails">
+                <ScalarProperty Name="RegexPattern" ColumnName="RegexPattern" />
+                <ScalarProperty Name="MaxLength" ColumnName="MaxLength" />
+                <ScalarProperty Name="MinLength" ColumnName="MinLength" />
+                <ScalarProperty Name="PlaceHolder" ColumnName="PlaceHolder" />
+                <ScalarProperty Name="OptionId" ColumnName="OptionId" />
+                <ScalarProperty Name="OptionDetailsId" ColumnName="OptionDetailsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Options">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.Option">
+              <MappingFragment StoreEntitySet="Options">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="OptionId" ColumnName="OptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsMandatory" ColumnName="IsMandatory" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypes">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.QuestionType">
+              <MappingFragment StoreEntitySet="QuestionTypes">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="QuestionTypeId" ColumnName="QuestionTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Surveys">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.Survey">
+              <MappingFragment StoreEntitySet="Survey">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyQuestionMappings">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.SurveyQuestionMapping">
+              <MappingFragment StoreEntitySet="SurveyQuestionMapping">
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="SurveyQuestionMappingId" ColumnName="SurveyQuestionMappingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSurveyDetails">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.UserSurveyDetail">
+              <MappingFragment StoreEntitySet="UserSurveyDetails">
+                <ScalarProperty Name="CustomValue" ColumnName="CustomValue" />
+                <ScalarProperty Name="SystemValue" ColumnName="SystemValue" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="UserSurveyId" ColumnName="UserSurveyId" />
+                <ScalarProperty Name="UserSurveyDetailsId" ColumnName="UserSurveyDetailsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSurveys">
+            <EntityTypeMapping TypeName="SurveyShrikeModel.UserSurvey">
+              <MappingFragment StoreEntitySet="UserSurveys">
+                <ScalarProperty Name="SubmittedOn" ColumnName="SubmittedOn" />
+                <ScalarProperty Name="SubmittedBy" ColumnName="SubmittedBy" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="UserSurveyId" ColumnName="UserSurveyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

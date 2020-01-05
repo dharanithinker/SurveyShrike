@@ -1,0 +1,72 @@
+CREATE TABLE QuestionTypes
+(
+	QuestionTypeId INT IDENTITY(1,1) PRIMARY KEY,
+	[Type] VARCHAR(100) 
+)
+-- 1,SingleLine ,   2,Paragraph
+GO
+CREATE TABLE Questions
+(
+	QuestionId INT IDENTITY(1,1) PRIMARY KEY,
+	[Description] VARCHAR(MAX),
+	TypeID INT FOREIGN KEY REFERENCES QuestionTypes(QuestionTypeId),
+	IsMandatory BIT DEFAULT 0,
+	IsActive BIT DEFAULT 1
+)
+GO
+CREATE TABLE Options
+(
+	OptionId INT IDENTITY(1,1) PRIMARY KEY,
+	QuestionId INT FOREIGN KEY REFERENCES Questions(QuestionId),
+	[Description] VARCHAR(MAX),
+	IsActive BIT DEFAULT 1
+)
+GO
+CREATE TABLE OptionDetails
+(
+	OptionDetailsId INT IDENTITY(1,1) PRIMARY KEY,
+	OptionId INT FOREIGN KEY REFERENCES Options(OptionId),
+	PlaceHolder VARCHAR(100) DEFAULT NULL,
+	MinLength INT DEFAULT 0,
+	[MaxLength] INT DEFAULT 0,
+	RegexPattern VARCHAR(256) DEFAULT NULL  	
+)
+GO
+CREATE TABLE Survey
+(
+	SurveyId INT IDENTITY(1,1) PRIMARY KEY,
+	[Name] VARCHAR(100) UNIQUE NOT NULL,
+	CreatedBy NVARCHAR(128) FOREIGN KEY REFERENCES AspNetUsers(Id),
+	CreatedDate DATETIME,
+	ModifiedBy NVARCHAR(128) FOREIGN KEY REFERENCES AspNetUsers(Id),
+	ModifiedDate DATETIME,
+	IsActive BIT DEFAULT 1
+)
+GO
+CREATE TABLE SurveyQuestionMapping
+(
+	SurveyQuestionMappingId INT IDENTITY(1,1) PRIMARY KEY,
+	SurveyId INT FOREIGN KEY REFERENCES Survey(SurveyId),
+	QuestionId INT FOREIGN KEY REFERENCES Questions(QuestionId),
+)
+
+CREATE INDEX ix_user_surveyquestions
+ON SurveyQuestionMapping(SurveyId)
+
+GO
+CREATE TABLE UserSurveys
+(
+	UserSurveyId INT IDENTITY(1,1) PRIMARY KEY,
+	SurveyId INT FOREIGN KEY REFERENCES Survey(SurveyId),
+	SubmittedBy NVARCHAR(128) FOREIGN KEY REFERENCES AspNetUsers(Id),
+	SubmittedOn DATETIME
+)
+GO
+CREATE TABLE UserSurveyDetails
+(
+	UserSurveyDetailsId INT IDENTITY(1,1) PRIMARY KEY,
+	UserSurveyId INT FOREIGN KEY REFERENCES UserSurveys(UserSurveyId),
+	QuestionId INT FOREIGN KEY REFERENCES Questions(QuestionId),
+	SystemValue INT FOREIGN KEY REFERENCES Options(OptionId), -- Defined values in Options(Radio,DropDown)
+	CustomValue VARCHAR(MAX)
+)
